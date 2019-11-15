@@ -7,7 +7,7 @@ import mrmathami.thegame.entity.bullet.AbstractBullet;
 import mrmathami.thegame.entity.enemy.AbstractEnemy;
 import mrmathami.thegame.entity.tile.AbstractTile;
 
-import javax.annotation.Nonnull;
+
 import java.util.Collection;
 
 public abstract class AbstractTower<E extends AbstractBullet> extends AbstractTile implements UpdatableEntity {
@@ -24,7 +24,7 @@ public abstract class AbstractTower<E extends AbstractBullet> extends AbstractTi
 	}
 
 	@Override
-	public final void onUpdate(@Nonnull GameField field) {
+	public final void onUpdate( GameField field) {
 		this.tickDown -= 1;
 		if (tickDown <= 0) {
 			// TODO: Find a target and spawn a bullet to that direction.
@@ -46,6 +46,6 @@ public abstract class AbstractTower<E extends AbstractBullet> extends AbstractTi
 	 * @param deltaY deltaY
 	 * @return the bullet entity
 	 */
-	@Nonnull
+
 	protected abstract E doSpawn(long createdTick, double posX, double posY, double deltaX, double deltaY);
 }

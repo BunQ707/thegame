@@ -3,16 +3,16 @@ package mrmathami.thegame;
 
 import mrmathami.thegame.entity.*;
 
-import javax.annotation.Nonnull;
+
 import java.util.*;
 
 /**
  * Game Field. Created from GameMap for each new stage. Represent the currently playing game.
  */
 public final class GameField {
-	@Nonnull private final Set<GameEntity> entities = new LinkedHashSet<>(Config._TILE_MAP_COUNT);
-	@Nonnull private final Collection<GameEntity> unmodifiableEntities = Collections.unmodifiableCollection(entities);
-	@Nonnull private final List<GameEntity> spawnEntities = new ArrayList<>(Config._TILE_MAP_COUNT);
+	 private final Set<GameEntity> entities = new LinkedHashSet<>(Config._TILE_MAP_COUNT);
+	 private final Collection<GameEntity> unmodifiableEntities = Collections.unmodifiableCollection(entities);
+	 private final List<GameEntity> spawnEntities = new ArrayList<>(Config._TILE_MAP_COUNT);
 
 	/**
 	 * Field width
@@ -27,7 +27,7 @@ public final class GameField {
 	 */
 	private long tickCount;
 
-	public GameField(@Nonnull GameStage gameStage) {
+	public GameField( GameStage gameStage) {
 		this.width = gameStage.getWidth();
 		this.height = gameStage.getHeight();
 		this.tickCount = 0;
@@ -49,7 +49,7 @@ public final class GameField {
 	/**
 	 * @return entities on the field. Read-only list.
 	 */
-	@Nonnull
+
 	public final Collection<GameEntity> getEntities() {
 		return unmodifiableEntities;
 	}
@@ -59,7 +59,7 @@ public final class GameField {
 	 *
 	 * @param entity Entity to spawn
 	 */
-	public final void doSpawn(@Nonnull GameEntity entity) {
+	public final void doSpawn( GameEntity entity) {
 		if (entity.isBeingOverlapped(0.0, 0.0, width, height)) spawnEntities.add(entity);
 	}
 

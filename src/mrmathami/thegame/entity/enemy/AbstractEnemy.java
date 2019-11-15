@@ -5,7 +5,7 @@ import mrmathami.thegame.GameField;
 import mrmathami.thegame.entity.*;
 import mrmathami.thegame.entity.tile.Road;
 
-import javax.annotation.Nonnull;
+
 import java.util.Collection;
 
 public abstract class AbstractEnemy extends AbstractEntity implements UpdatableEntity, EffectEntity, LivingEntity, DestroyListener {
@@ -28,8 +28,8 @@ public abstract class AbstractEnemy extends AbstractEntity implements UpdatableE
 		this.reward = reward;
 	}
 
-	private static double evaluateDistance(@Nonnull Collection<GameEntity> overlappableEntities,
-			@Nonnull GameEntity sourceEntity, double posX, double posY, double width, double height) {
+	private static double evaluateDistance( Collection<GameEntity> overlappableEntities,
+			 GameEntity sourceEntity, double posX, double posY, double width, double height) {
 		double distance = 0.0;
 		double sumArea = 0.0;
 		for (GameEntity entity : GameEntities.getOverlappedEntities(overlappableEntities, posX, posY, width, height)) {
@@ -47,7 +47,7 @@ public abstract class AbstractEnemy extends AbstractEntity implements UpdatableE
 	}
 
 	@Override
-	public final void onUpdate(@Nonnull GameField field) {
+	public final void onUpdate( GameField field) {
 		final double enemyPosX = getPosX();
 		final double enemyPosY = getPosY();
 		final double enemyWidth = getWidth();
@@ -74,12 +74,12 @@ public abstract class AbstractEnemy extends AbstractEntity implements UpdatableE
 	}
 
 	@Override
-	public final void onDestroy(@Nonnull GameField field) {
+	public final void onDestroy( GameField field) {
 		// TODO: reward
 	}
 
 	@Override
-	public final boolean onEffect(@Nonnull GameField field, @Nonnull LivingEntity livingEntity) {
+	public final boolean onEffect( GameField field,  LivingEntity livingEntity) {
 		// TODO: harm the target
 		this.health = Long.MIN_VALUE;
 		return false;

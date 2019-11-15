@@ -11,5 +11,5 @@ module towerdefense {
 	requires javafx.graphics;
 	requires javafx.controls;
 	requires javafx.fxml;
-	requires jsr305;
+
 }

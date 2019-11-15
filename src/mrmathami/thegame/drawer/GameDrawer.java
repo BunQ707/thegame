@@ -14,8 +14,7 @@ import mrmathami.thegame.entity.tile.Target;
 import mrmathami.thegame.entity.tile.spawner.NormalSpawner;
 import mrmathami.thegame.entity.tile.tower.NormalTower;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +25,7 @@ public final class GameDrawer {
 	 * TODO: This is a list contains Entity type that can be drawn on screen.
 	 * Remember to add your own entity class here if it can be drawn.
 	 */
-	@Nonnull private static final List<Class<?>> ENTITY_DRAWING_ORDER = List.of(
+	 private static final List<Class<?>> ENTITY_DRAWING_ORDER = List.of(
 			Road.class,
 			Mountain.class,
 			NormalTower.class,
@@ -50,7 +49,7 @@ public final class GameDrawer {
 	 * This is a map between Entity type and its drawer.
 	 * Remember to add your entity drawer here.
 	 */
-	@Nonnull private static final Map<Class<? extends GameEntity>, EntityDrawer> ENTITY_DRAWER_MAP = new HashMap<>(Map.ofEntries(
+	 private static final Map<Class<? extends GameEntity>, EntityDrawer> ENTITY_DRAWER_MAP = new HashMap<>(Map.ofEntries(
 			Map.entry(Road.class, new RoadDrawer()),
 			Map.entry(Mountain.class, new MountainDrawer()),
 			Map.entry(NormalTower.class, new NormalTowerDrawer()),
@@ -70,13 +69,13 @@ public final class GameDrawer {
 			Map.entry(Target.class, new TargetDrawer())
 	));
 
-	@Nonnull private final GraphicsContext graphicsContext;
-	@Nonnull private GameField gameField;
+	 private final GraphicsContext graphicsContext;
+	 private GameField gameField;
 	private transient double fieldStartPosX = Float.NaN;
 	private transient double fieldStartPosY = Float.NaN;
 	private transient double fieldZoom = Float.NaN;
 
-	public GameDrawer(@Nonnull GraphicsContext graphicsContext, @Nonnull GameField gameField) {
+	public GameDrawer( GraphicsContext graphicsContext,  GameField gameField) {
 		this.graphicsContext = graphicsContext;
 		this.gameField = gameField;
 	}
@@ -89,7 +88,7 @@ public final class GameDrawer {
 	 * @param entityB entity B
 	 * @return order
 	 */
-	private static int entityDrawingOrderComparator(@Nonnull GameEntity entityA, @Nonnull GameEntity entityB) {
+	private static int entityDrawingOrderComparator( GameEntity entityA,  GameEntity entityB) {
 		final int compareOrder = Integer.compare(
 				ENTITY_DRAWING_ORDER.indexOf(entityA.getClass()),
 				ENTITY_DRAWING_ORDER.indexOf(entityB.getClass())
@@ -108,8 +107,8 @@ public final class GameDrawer {
 	 * @param entity entity
 	 * @return the drawer fot that entity, or null if that entity is not drawable.
 	 */
-	@Nullable
-	private static EntityDrawer getEntityDrawer(@Nonnull GameEntity entity) {
+
+	private static EntityDrawer getEntityDrawer( GameEntity entity) {
 		return ENTITY_DRAWER_MAP.get(entity.getClass());
 	}
 
@@ -125,7 +124,7 @@ public final class GameDrawer {
 		return fieldZoom;
 	}
 
-	public final void setGameField(@Nonnull GameField gameField) {
+	public final void setGameField( GameField gameField) {
 		this.gameField = gameField;
 	}
 

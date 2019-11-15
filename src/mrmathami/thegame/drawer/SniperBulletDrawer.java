@@ -8,7 +8,7 @@ import javafx.scene.paint.Stop;
 import mrmathami.thegame.drawer.EntityDrawer;
 import mrmathami.thegame.entity.GameEntity;
 
-import javax.annotation.Nonnull;
+
 
 public final class SniperBulletDrawer implements EntityDrawer {
 	private final RadialGradient gradient = new RadialGradient(
@@ -25,7 +25,7 @@ public final class SniperBulletDrawer implements EntityDrawer {
 	);
 
 	@Override
-	public void draw(long tickCount, @Nonnull GraphicsContext graphicsContext, @Nonnull GameEntity entity, double screenPosX, double screenPosY, double screenWidth, double screenHeight, double zoom) {
+	public void draw(long tickCount,  GraphicsContext graphicsContext,  GameEntity entity, double screenPosX, double screenPosY, double screenWidth, double screenHeight, double zoom) {
 		graphicsContext.setFill(gradient);
 		graphicsContext.fillOval(screenPosX, screenPosY, screenWidth, screenHeight);
 	}

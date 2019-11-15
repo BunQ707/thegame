@@ -37,7 +37,7 @@ public final class Main extends Application {
 //		canvas.setOnMouseMoved(...);
 
 
-		primaryStage.setResizable(false);
+		primaryStage.setResizable(true);
 		primaryStage.setTitle(Config.GAME_NAME);
 		primaryStage.setOnCloseRequest(gameController::closeRequestHandler);
 		primaryStage.setScene(new Scene(new StackPane(canvas)));

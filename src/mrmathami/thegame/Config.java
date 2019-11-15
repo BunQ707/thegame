@@ -4,7 +4,7 @@ public final class Config {
 	/**
 	 * Game name. Change it if you want.
 	 */
-	public static final String GAME_NAME = "The Game";
+	public static final String GAME_NAME = "E-One";
 	/**
 	 * Ticks per second
 	 */
@@ -19,7 +19,7 @@ public final class Config {
 	 * 1.0 field unit == TILE_SIZE pixel on the screen.
 	 * Change it base on your texture size.
 	 */
-	public static final long TILE_SIZE = 32;
+	public static final long TILE_SIZE = 30;
 	/**
 	 * Num of tiles the screen can display if fieldZoom is TILE_SIZE,
 	 * in other words, the texture will be display as it without scaling.

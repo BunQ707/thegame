@@ -3,7 +3,7 @@ package mrmathami.thegame.entity.bullet;
 import mrmathami.thegame.GameField;
 import mrmathami.thegame.entity.*;
 
-import javax.annotation.Nonnull;
+
 
 public abstract class AbstractBullet extends AbstractEntity implements UpdatableEntity, EffectEntity, DestroyableEntity {
 	private final double deltaX;
@@ -21,14 +21,14 @@ public abstract class AbstractBullet extends AbstractEntity implements Updatable
 	}
 
 	@Override
-	public final void onUpdate(@Nonnull GameField field) {
+	public final void onUpdate( GameField field) {
 		this.tickDown -= 1;
 		setPosX(getPosX() + deltaX);
 		setPosY(getPosY() + deltaY);
 	}
 
 	@Override
-	public final boolean onEffect(@Nonnull GameField field, @Nonnull LivingEntity livingEntity) {
+	public final boolean onEffect( GameField field,  LivingEntity livingEntity) {
 		livingEntity.doEffect(-strength);
 		this.tickDown = 0;
 		return false;
