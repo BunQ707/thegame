@@ -68,10 +68,9 @@ public final class GameDrawer {
 //			Map.entry(BossSpawner.class, new SpawnerDrawer()),
 			Map.entry(Target.class, new TargetDrawer())
 	));
-
 	 private final GraphicsContext graphicsContext;
 	 private GameField gameField;
-	private transient double fieldStartPosX = Float.NaN;
+	 private transient double fieldStartPosX = Float.NaN;
 	private transient double fieldStartPosY = Float.NaN;
 	private transient double fieldZoom = Float.NaN;
 
@@ -150,11 +149,12 @@ public final class GameDrawer {
 		final double fieldStartPosY = this.fieldStartPosY;
 		final double fieldZoom = this.fieldZoom;
 
+		//lấy list entities có trong field đã zoom:
 		final List<GameEntity> entities = new ArrayList<>(GameEntities.getOverlappedEntities(gameField.getEntities(),
 				fieldStartPosX, fieldStartPosY, Config.SCREEN_WIDTH / fieldZoom, Config.SCREEN_HEIGHT / fieldZoom));
 		entities.sort(GameDrawer::entityDrawingOrderComparator);
 
-		graphicsContext.setFill(Color.BLACK);
+		graphicsContext.setFill(Color.WHITE);
 		graphicsContext.fillRect(0.0, 0.0, Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
 
 		GameEntity lastEntity = null;

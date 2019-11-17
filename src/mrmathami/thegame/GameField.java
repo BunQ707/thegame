@@ -2,6 +2,7 @@ package mrmathami.thegame;
 
 
 import mrmathami.thegame.entity.*;
+import mrmathami.thegame.entity.enemy.NormalEnemy;
 
 
 import java.util.*;
@@ -26,11 +27,13 @@ public final class GameField {
 	 * Field tick count
 	 */
 	private long tickCount;
+	private int[][] mapLoaded;
 
 	public GameField( GameStage gameStage) {
 		this.width = gameStage.getWidth();
 		this.height = gameStage.getHeight();
 		this.tickCount = 0;
+		this.mapLoaded = gameStage.getMap();
 		entities.addAll(gameStage.getEntities());
 	}
 
@@ -45,6 +48,9 @@ public final class GameField {
 	public final long getTickCount() {
 		return tickCount;
 	}
+
+    public final int[][] getMap() {return mapLoaded; }
+    public final int getMapValAtXY(int posX, int posY) {return mapLoaded[posX][posY]; }
 
 	/**
 	 * @return entities on the field. Read-only list.
@@ -75,9 +81,11 @@ public final class GameField {
 	 * 2.2. Destroy entities that are outside the field.
 	 * 3. Spawn Entity: Add entities that are marked to be spawned.
 	 */
-	public final void tick() {
-		this.tickCount += 1;
 
+	public final void tick() {
+
+		this.tickCount += 1;
+        //doSpawn(new NormalEnemy(0,13,2));
 		// 1.1. Update UpdatableEntity
 		for (final GameEntity entity : entities) {
 			if (entity instanceof UpdatableEntity) ((UpdatableEntity) entity).onUpdate(this);
@@ -115,6 +123,9 @@ public final class GameField {
 			entities.add(entity);
 			if (entity instanceof SpawnListener) ((SpawnListener) entity).onSpawn(this);
 		}
+
 		spawnEntities.clear();
+
 	}
+
 }

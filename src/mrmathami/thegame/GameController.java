@@ -38,7 +38,7 @@ public final class GameController extends AnimationTimer {
 
 	/**
 	 * Game field. Contain everything in the current game field.
-	 * Responsible to update the field every tick.
+	 * Responsible to update the field every tick. Cập nhật field mỗi tick
 	 * Kinda advance, modify if you are sure about your change.
 	 */
 	private GameField field;
@@ -78,6 +78,7 @@ public final class GameController extends AnimationTimer {
 		this.field = new GameField(GameStage.load("/stage/demo.txt"));
 
 		// The drawer. Nothing fun here.
+		//
 		this.drawer = new GameDrawer(graphicsContext, field);
 
 		// Field view region is a rectangle region
@@ -103,6 +104,7 @@ public final class GameController extends AnimationTimer {
 	 */
 	@Override
 	public void handle(long now) {
+
 		// don't touch me.
 		final long currentTick = tick;
 		final long startNs = System.nanoTime();
@@ -138,6 +140,9 @@ public final class GameController extends AnimationTimer {
 		this.scheduledFuture = SCHEDULER.scheduleAtFixedRate(this::tick, 0, Config.GAME_NSPT, TimeUnit.NANOSECONDS);
 		// start the JavaFX loop.
 		super.start();
+		//Starts the AnimationTimers.
+		//Once it is started, the handle(long) method of this AnimationTimers will be called in every frame.
+		// The AnimationTimers can be stopped by calling stop().
 	}
 
 	/**
@@ -207,9 +212,9 @@ public final class GameController extends AnimationTimer {
 	 * @param mouseEvent the mouse button you release up.
 	 */
 	final void mouseUpHandler(MouseEvent mouseEvent) {
-//		mouseEvent.getButton(); // which mouse button?
-//		// Screen coordinate. Remember to convert to field coordinate
-//		drawer.screenToFieldPosX(mouseEvent.getX());
-//		drawer.screenToFieldPosY(mouseEvent.getY());
+		mouseEvent.getButton(); // which mouse button?
+		// Screen coordinate. Remember to convert to field coordinate
+		drawer.screenToFieldPosX(mouseEvent.getX());
+		drawer.screenToFieldPosY(mouseEvent.getY());
 	}
 }

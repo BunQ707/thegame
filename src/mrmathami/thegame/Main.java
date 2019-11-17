@@ -18,8 +18,11 @@ public final class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
+		// tạo canvas
 		final Canvas canvas = new Canvas(Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT);
+		// tạo
 		final GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
+		//tạo gamecontroler
 		final GameController gameController = new GameController(graphicsContext);
 
 		canvas.setFocusTraversable(true);
@@ -40,9 +43,11 @@ public final class Main extends Application {
 		primaryStage.setResizable(true);
 		primaryStage.setTitle(Config.GAME_NAME);
 		primaryStage.setOnCloseRequest(gameController::closeRequestHandler);
+		//tạo scene và đưa vào stage, show map
 		primaryStage.setScene(new Scene(new StackPane(canvas)));
 		primaryStage.show();
 
+		//Starts the AnimationTimers
 		gameController.start();
 	}
 }

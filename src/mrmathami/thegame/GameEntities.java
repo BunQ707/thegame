@@ -11,6 +11,7 @@ import mrmathami.utilities.Pair;
 import mrmathami.utilities.UnorderedPair;
 
 
+
 import java.util.*;
 
 public final class GameEntities {
@@ -52,7 +53,16 @@ public final class GameEntities {
 
 	private GameEntities() {
 	}
-
+    public static Collection<GameEntity> entitiesThatIncludePoint(Collection<GameEntity> entities, double posX, double posY) {
+        final List<GameEntity> outputEntities = new ArrayList<>(Config._TILE_MAP_COUNT);
+        for (final GameEntity entity : entities) {
+            if (entity.getPosX() <= posX && entity.getPosX()+entity.getWidth() > posX && entity.getPosY() == posY)
+                outputEntities.add(entity);
+            else if (entity.getPosY() <= posY && entity.getPosY()+entity.getHeight()> posY && entity.getPosX() == posX)
+                outputEntities.add(entity);
+        }
+        return outputEntities;
+    }
 	/**
 	 * An useful method to find entities that are containing this specific rectangle region.
 	 * Do not touch, just use me.
@@ -94,8 +104,9 @@ public final class GameEntities {
 	}
 
 	/**
-	 * An useful method to find entities that are being overlapped in a specific rectangle region.
+	 * An useful method to find entities that are being overlapped(chồng đè) in a specific rectangle region.
 	 * Do not touch, just use me.
+	 * Tóm lại, cho ra ds entities có trong hcn (x,y,w,h)
 	 *
 	 * @param entities input entities
 	 * @param posX     rectangle pos x
@@ -183,7 +194,7 @@ public final class GameEntities {
 	}
 
 	/**
-	 * Check whether two entity class can collide. If you have an entity, use entity.getClass() to get its class.
+	 * Check whether two entity class can collide(va chạm). If you have an entity, use entity.getClass() to get its class.
 	 *
 	 * @param entityClassA entity class
 	 * @param entityClassB entity class

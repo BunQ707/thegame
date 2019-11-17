@@ -8,7 +8,7 @@ public final class Config {
 	/**
 	 * Ticks per second
 	 */
-	public static final long GAME_TPS = 20;
+	public static final long GAME_TPS = 30;
 	/**
 	 * Nanoseconds per tick
 	 */
@@ -29,7 +29,7 @@ public final class Config {
 	 * Num of tiles the screen can display if fieldZoom is TILE_SIZE,
 	 * in other words, the texture will be display as it without scaling.
 	 */
-	public static final long TILE_VERTICAL = 20;
+	public static final long TILE_VERTICAL = 22;//map size is 18 so the rest is for items
 	/**
 	 * An arbitrary number just to make some code run a little faster.
 	 * Do not touch.
@@ -52,7 +52,7 @@ public final class Config {
 	//region Bullet
 	public static final long NORMAL_BULLET_TTL = 30;
 	public static final long NORMAL_BULLET_STRENGTH = 30;
-	public static final double NORMAL_BULLET_SPEED = 0.3;
+	public static double NORMAL_BULLET_SPEED = 0.3;
 
 	public static final long MACHINE_GUN_BULLET_TTL = 15;
 	public static final long MACHINE_GUN_BULLET_STRENGTH = 20;
@@ -75,10 +75,11 @@ public final class Config {
 	//endregion
 
 	//region Enemy
-	public static final double NORMAL_ENEMY_SIZE = 0.9;
+	public static final double NORMAL_ENEMY_SIZE = 1;//0.9
 	public static final long NORMAL_ENEMY_HEALTH = 100;
 	public static final long NORMAL_ENEMY_ARMOR = 3;
-	public static final double NORMAL_ENEMY_SPEED = 0.3;
+	public static final double NORMAL_ENEMY_SPEED = 0.5;//0.3
+
 	public static final long NORMAL_ENEMY_REWARD = 1;
 
 	public static final double SMALLER_ENEMY_SIZE = 0.7;

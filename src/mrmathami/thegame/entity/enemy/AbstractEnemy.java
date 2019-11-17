@@ -4,6 +4,7 @@ import mrmathami.thegame.GameEntities;
 import mrmathami.thegame.GameField;
 import mrmathami.thegame.entity.*;
 import mrmathami.thegame.entity.tile.Road;
+import mrmathami.thegame.Config;
 
 
 import java.util.Collection;
@@ -45,32 +46,58 @@ public abstract class AbstractEnemy extends AbstractEntity implements UpdatableE
 		}
 		return distance / sumArea;
 	}
+    public final void goPikachu(GameField field)
+    {
 
+        int x= (int) getPosX();
+        System.out.println(getPosX()+" now x: "+x);
+        int y= (int) getPosY();
+        System.out.println(getPosY()+" now y: "+y);
+        int roadValue= field.getMapValAtXY(x,y);
+        System.out.println("road found: "+roadValue);
+        switch (roadValue)
+        {
+            case 1:
+                setPosX(getPosX()-speed);
+                break;
+            case 3:
+                setPosX(getPosX()+speed);
+                break;
+            case 2:
+                setPosY(getPosY()-speed);
+                break;
+            case 4:
+                setPosY(getPosY()+speed);
+                break;
+
+        }
+    }
 	@Override
 	public final void onUpdate( GameField field) {
-		final double enemyPosX = getPosX();
-		final double enemyPosY = getPosY();
-		final double enemyWidth = getWidth();
-		final double enemyHeight = getHeight();
-		final Collection<GameEntity> overlappableEntities = GameEntities.getOverlappedEntities(field.getEntities(),
-				getPosX() - speed, getPosY() - speed, speed + getWidth() + speed, speed + getHeight() + speed);
-		double minimumDistance = Double.MAX_VALUE;
-		double newPosX = enemyPosX;
-		double newPosY = enemyPosY;
-		for (double realSpeed = speed * 0.125; realSpeed <= speed; realSpeed += realSpeed) {
-			for (double[] deltaDirection : DELTA_DIRECTION_ARRAY) {
-				final double currentPosX = enemyPosX + deltaDirection[0] * realSpeed;
-				final double currentPosY = enemyPosY + deltaDirection[1] * realSpeed;
-				final double currentDistance = evaluateDistance(overlappableEntities, this, currentPosX, currentPosY, enemyWidth, enemyHeight);
-				if (currentDistance < minimumDistance) {
-					minimumDistance = currentDistance;
-					newPosX = currentPosX;
-					newPosY = currentPosY;
-				}
-			}
-		}
-		setPosX(newPosX);
-		setPosY(newPosY);
+	    goPikachu(field);
+//		final double enemyPosX = getPosX();
+//		final double enemyPosY = getPosY();
+//		final double enemyWidth = getWidth();
+//		final double enemyHeight = getHeight();
+//		final Collection<GameEntity> overlappableEntities = GameEntities.getOverlappedEntities(field.getEntities(),
+//				getPosX() - speed, getPosY() - speed, speed + getWidth() + speed, speed + getHeight() + speed);
+//		double minimumDistance = Double.MAX_VALUE;
+//		double newPosX = enemyPosX;
+//		double newPosY = enemyPosY;
+//		for (double realSpeed = speed * 0.125; realSpeed <= speed; realSpeed += realSpeed) {
+//			for (double[] deltaDirection : DELTA_DIRECTION_ARRAY) {
+//				final double currentPosX = enemyPosX + deltaDirection[0] * realSpeed;
+//				final double currentPosY = enemyPosY + deltaDirection[1] * realSpeed;
+//				final double currentDistance = evaluateDistance(overlappableEntities, this, currentPosX, currentPosY, enemyWidth, enemyHeight);
+//				if (currentDistance < minimumDistance) {
+//					minimumDistance = currentDistance;
+//					newPosX = currentPosX;
+//					newPosY = currentPosY;
+//				}
+//			}
+//		}
+//		setPosX(newPosX);
+//		setPosY(newPosY);
 	}
 
 	@Override
@@ -81,6 +108,7 @@ public abstract class AbstractEnemy extends AbstractEntity implements UpdatableE
 	@Override
 	public final boolean onEffect( GameField field,  LivingEntity livingEntity) {
 		// TODO: harm the target
+
 		this.health = Long.MIN_VALUE;
 		return false;
 	}

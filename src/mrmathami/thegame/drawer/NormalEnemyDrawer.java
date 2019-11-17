@@ -12,7 +12,7 @@ import mrmathami.thegame.entity.GameEntity;
 public final class NormalEnemyDrawer implements EntityDrawer {
 	@Override
 	public void draw(long tickCount,  GraphicsContext graphicsContext,  GameEntity entity, double screenPosX, double screenPosY, double screenWidth, double screenHeight, double zoom) {
-		graphicsContext.setFill(Color.DARKMAGENTA);
+		graphicsContext.setFill(Color.HOTPINK);
 		graphicsContext.fillRoundRect(screenPosX, screenPosY, screenWidth, screenHeight, 4, 4);
 	}
 }

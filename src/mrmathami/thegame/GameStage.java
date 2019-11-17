@@ -1,6 +1,7 @@
 package mrmathami.thegame;
 
 import mrmathami.thegame.entity.GameEntity;
+import mrmathami.thegame.entity.enemy.NormalEnemy;
 import mrmathami.thegame.entity.tile.Mountain;
 import mrmathami.thegame.entity.tile.Road;
 import mrmathami.thegame.entity.tile.Target;
@@ -16,6 +17,7 @@ public final class GameStage {
 	private final long height;
 
 	private final List<GameEntity> entities;
+	private static int[][] mapLoaded;
 
 	private GameStage(long width, long height,  List<GameEntity> entities) {
 		this.width = width;
@@ -32,21 +34,28 @@ public final class GameStage {
 				final int width = scanner.nextInt();
 				final int height = scanner.nextInt();
 				final int numOfTiles = scanner.nextInt();
+
+                mapLoaded = new int[width][height];
+
 				final List<GameEntity> entities = new ArrayList<>(width * height + numOfTiles);
+				//build map
 				for (int y = 0; y < height; y++) {
 					for (int x = 0; x < width; x++) {
 						final int value = scanner.nextInt();
-						if (value == 0) {
+						mapLoaded[x][y]= value;
+						if (value >0 && value <5) {
 							entities.add(new Road(0, x, y));
-						} else if (value == 1) {
+						} else if (value == 5) {
 							entities.add(new Mountain(0, x, y));
 						} else {
 							throw new InputMismatchException("Unexpected value! Input value: " + value);
 						}
 					}
 				}
+				System.out.println("map at 0,2 is: "+mapLoaded[0][2]);
 				// path finding
-				final Queue<Road> roadQueue = new LinkedList<>();
+				//TODO: tìm đường (?)
+//				final Queue<Road> roadQueue = new LinkedList<>();
 
 				for (int i = 0; i < numOfTiles; i++) {
 					final String value = scanner.next();
@@ -98,6 +107,10 @@ public final class GameStage {
 //						final int x = scanner.nextInt();
 //						final int y = scanner.nextInt();
 //						entities.add(new SniperTower(0, x, y));
+					}else if ("NormalEnemy".equals(value)) {
+						final int x = scanner.nextInt();
+						final int y = scanner.nextInt();
+						entities.add(new NormalEnemy(0, x, y));
 					} else if ("Target".equals(value))
 					{
 						final int x = scanner.nextInt();
@@ -107,14 +120,14 @@ public final class GameStage {
 						final int health = scanner.nextInt();
 						entities.add(new Target(0, x, y, w, h, health));
 
-						final Collection<GameEntity> overlappedEntities = GameEntities.getOverlappedEntities(entities, x, y, w, h);
-						for (GameEntity entity : overlappedEntities) {
-							if (entity instanceof Road) {
-								final Road road = (Road) entity;
-								roadQueue.add(road);
-								road.setDistance(0.0);
-							}
-						}
+//						final Collection<GameEntity> overlappedEntities = GameEntities.getOverlappedEntities(entities, x, y, w, h);
+//						for (GameEntity entity : overlappedEntities) {
+//							if (entity instanceof Road) {
+//								final Road road = (Road) entity;
+//								roadQueue.add(road);
+//								road.setDistance(0.0);
+//							}
+//						}
 					} else {
 						System.out.println("Unexpected value! Input value: " + value);
 						scanner.nextLine();
@@ -122,26 +135,26 @@ public final class GameStage {
 					}
 				}
 
-				final Set<Road> roadSet = new HashSet<>(roadQueue);
-				while (!roadQueue.isEmpty()) {
-					final Road road = roadQueue.poll();
-					roadSet.add(road);
-					final Collection<Road> overlappedEntities = GameEntities.getFilteredOverlappedEntities(entities, Road.class,
-							road.getPosX() - 0.5, road.getPosY() - 0.5, 2.0, 2.0);
-					for (Road destRoad : overlappedEntities) {
-						if (!roadSet.contains(destRoad)) {
-							if (!roadQueue.contains(destRoad)) roadQueue.add(destRoad);
-							final double deltaX = road.getPosX() - destRoad.getPosX();
-							final double deltaY = road.getPosY() - destRoad.getPosY();
-							final Collection<Road> destOverlappedRoads = GameEntities.getFilteredOverlappedEntities(entities, Road.class,
-									destRoad.getPosX() - 0.5, destRoad.getPosY() - 0.5, 2.0, 2.0);
-							final double destDistance = road.getDistance() + Math.sqrt(deltaX * deltaX + deltaY * deltaY) / destOverlappedRoads.size();
-							if (Double.isNaN(destRoad.getDistance()) || destRoad.getDistance() > destDistance) {
-								destRoad.setDistance(destDistance);
-							}
-						}
-					}
-				}
+//				final Set<Road> roadSet = new HashSet<>(roadQueue);
+//				while (!roadQueue.isEmpty()) {
+//					final Road road = roadQueue.poll();
+//					roadSet.add(road);
+//					final Collection<Road> overlappedEntities = GameEntities.getFilteredOverlappedEntities(entities, Road.class,
+//							road.getPosX() - 0.5, road.getPosY() - 0.5, 2.0, 2.0);
+//					for (Road destRoad : overlappedEntities) {
+//						if (!roadSet.contains(destRoad)) {
+//							if (!roadQueue.contains(destRoad)) roadQueue.add(destRoad);
+//							final double deltaX = road.getPosX() - destRoad.getPosX();
+//							final double deltaY = road.getPosY() - destRoad.getPosY();
+//							final Collection<Road> destOverlappedRoads = GameEntities.getFilteredOverlappedEntities(entities, Road.class,
+//									destRoad.getPosX() - 0.5, destRoad.getPosY() - 0.5, 2.0, 2.0);
+//							final double destDistance = road.getDistance() + Math.sqrt(deltaX * deltaX + deltaY * deltaY) / destOverlappedRoads.size();
+//							if (Double.isNaN(destRoad.getDistance()) || destRoad.getDistance() > destDistance) {
+//								destRoad.setDistance(destDistance);
+//							}
+//						}
+//					}
+//				}
 
 				return new GameStage(width, height, entities);
 			} catch (NoSuchElementException e) {
@@ -164,6 +177,8 @@ public final class GameStage {
 	public final long getHeight() {
 		return height;
 	}
+
+	public final int[][] getMap() {return mapLoaded;}
 
 
 	public final List<GameEntity> getEntities() {
