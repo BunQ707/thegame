@@ -15,4 +15,5 @@ public final class NormalSpawner extends AbstractSpawner<NormalEnemy> {
 	protected final NormalEnemy doSpawn(long createdTick, double posX, double posY) {
 		return new NormalEnemy(createdTick, posX, posY);
 	}
+
 }

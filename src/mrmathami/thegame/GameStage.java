@@ -2,11 +2,18 @@ package mrmathami.thegame;
 
 import mrmathami.thegame.entity.GameEntity;
 import mrmathami.thegame.entity.enemy.NormalEnemy;
+import mrmathami.thegame.entity.menu.NormalTowerIcon;
+import mrmathami.thegame.entity.menu.UnupdateIcon;
 import mrmathami.thegame.entity.tile.Mountain;
 import mrmathami.thegame.entity.tile.Road;
 import mrmathami.thegame.entity.tile.Target;
+import mrmathami.thegame.entity.tile.spawner.BossSpawner;
 import mrmathami.thegame.entity.tile.spawner.NormalSpawner;
+import mrmathami.thegame.entity.tile.spawner.SmallerSpawner;
+import mrmathami.thegame.entity.tile.spawner.TankerSpawner;
+import mrmathami.thegame.entity.tile.tower.MachineGunTower;
 import mrmathami.thegame.entity.tile.tower.NormalTower;
+import mrmathami.thegame.entity.tile.tower.SniperTower;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,6 +38,7 @@ public final class GameStage {
 			if (stream == null) throw new IOException("Resource not found! Resource name: " + name);
 			final Scanner scanner = new Scanner(stream);
 			try {
+
 				final int width = scanner.nextInt();
 				final int height = scanner.nextInt();
 				final int numOfTiles = scanner.nextInt();
@@ -38,6 +46,7 @@ public final class GameStage {
                 mapLoaded = new int[width][height];
 
 				final List<GameEntity> entities = new ArrayList<>(width * height + numOfTiles);
+
 				//build map
 				for (int y = 0; y < height; y++) {
 					for (int x = 0; x < width; x++) {
@@ -52,7 +61,7 @@ public final class GameStage {
 						}
 					}
 				}
-				System.out.println("map at 0,2 is: "+mapLoaded[0][2]);
+				//System.out.println("map at 0,2 is: "+mapLoaded[0][2]);
 				// path finding
 				//TODO: tìm đường (?)
 //				final Queue<Road> roadQueue = new LinkedList<>();
@@ -68,45 +77,45 @@ public final class GameStage {
 						final int initialDelay = scanner.nextInt();
 						final int numOfSpawn = scanner.nextInt();
 						entities.add(new NormalSpawner(0, x, y, w, h, spawnInterval, initialDelay, numOfSpawn));
-//					} else if ("SmallerSpawner".equals(value)) {
-//						final int x = scanner.nextInt();
-//						final int y = scanner.nextInt();
-//						final int w = scanner.nextInt();
-//						final int h = scanner.nextInt();
-//						final int spawnInterval = scanner.nextInt();
-//						final int initialDelay = scanner.nextInt();
-//						final int numOfSpawn = scanner.nextInt();
-//						entities.add(new SmallerSpawner(0, x, y, w, h, spawnInterval, initialDelay, numOfSpawn));
-//					} else if ("TankerSpawner".equals(value)) {
-//						final int x = scanner.nextInt();
-//						final int y = scanner.nextInt();
-//						final int w = scanner.nextInt();
-//						final int h = scanner.nextInt();
-//						final int spawnInterval = scanner.nextInt();
-//						final int initialDelay = scanner.nextInt();
-//						final int numOfSpawn = scanner.nextInt();
-//						entities.add(new TankerSpawner(0, x, y, w, h, spawnInterval, initialDelay, numOfSpawn));
-//					} else if ("BossSpawner".equals(value)) {
-//						final int x = scanner.nextInt();
-//						final int y = scanner.nextInt();
-//						final int w = scanner.nextInt();
-//						final int h = scanner.nextInt();
-//						final int spawnInterval = scanner.nextInt();
-//						final int initialDelay = scanner.nextInt();
-//						final int numOfSpawn = scanner.nextInt();
-//						entities.add(new BossSpawner(0, x, y, w, h, spawnInterval, initialDelay, numOfSpawn));
+					} else if ("SmallerSpawner".equals(value)) {
+						final int x = scanner.nextInt();
+						final int y = scanner.nextInt();
+						final int w = scanner.nextInt();
+						final int h = scanner.nextInt();
+						final int spawnInterval = scanner.nextInt();
+						final int initialDelay = scanner.nextInt();
+						final int numOfSpawn = scanner.nextInt();
+						entities.add(new SmallerSpawner(0, x, y, w, h, spawnInterval, initialDelay, numOfSpawn));
+					} else if ("TankerSpawner".equals(value)) {
+						final int x = scanner.nextInt();
+						final int y = scanner.nextInt();
+						final int w = scanner.nextInt();
+						final int h = scanner.nextInt();
+						final int spawnInterval = scanner.nextInt();
+						final int initialDelay = scanner.nextInt();
+						final int numOfSpawn = scanner.nextInt();
+						entities.add(new TankerSpawner(0, x, y, w, h, spawnInterval, initialDelay, numOfSpawn));
+					} else if ("BossSpawner".equals(value)) {
+						final int x = scanner.nextInt();
+						final int y = scanner.nextInt();
+						final int w = scanner.nextInt();
+						final int h = scanner.nextInt();
+						final int spawnInterval = scanner.nextInt();
+						final int initialDelay = scanner.nextInt();
+						final int numOfSpawn = scanner.nextInt();
+						entities.add(new BossSpawner(0, x, y, w, h, spawnInterval, initialDelay, numOfSpawn));
 					} else if ("NormalTower".equals(value)) {
 						final int x = scanner.nextInt();
 						final int y = scanner.nextInt();
 						entities.add(new NormalTower(0, x, y));
-//					} else if ("MachineGunTower".equals(value)) {
-//						final int x = scanner.nextInt();
-//						final int y = scanner.nextInt();
-//						entities.add(new MachineGunTower(0, x, y));
-//					} else if ("SniperTower".equals(value)) {
-//						final int x = scanner.nextInt();
-//						final int y = scanner.nextInt();
-//						entities.add(new SniperTower(0, x, y));
+					} else if ("MachineGunTower".equals(value)) {
+						final int x = scanner.nextInt();
+						final int y = scanner.nextInt();
+						entities.add(new MachineGunTower(0, x, y));
+					} else if ("SniperTower".equals(value)) {
+						final int x = scanner.nextInt();
+						final int y = scanner.nextInt();
+						entities.add(new SniperTower(0, x, y));
 					}else if ("NormalEnemy".equals(value)) {
 						final int x = scanner.nextInt();
 						final int y = scanner.nextInt();
@@ -134,6 +143,7 @@ public final class GameStage {
 //						throw new InputMismatchException("Unexpected value! Input value: " + value);
 					}
 				}
+				//entities.add(new UnupdateIcon(0,19,3));
 
 //				final Set<Road> roadSet = new HashSet<>(roadQueue);
 //				while (!roadQueue.isEmpty()) {

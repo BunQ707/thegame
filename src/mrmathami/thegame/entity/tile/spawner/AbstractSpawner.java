@@ -1,10 +1,13 @@
 package mrmathami.thegame.entity.tile.spawner;
 
+import mrmathami.thegame.Config;
 import mrmathami.thegame.GameEntities;
 import mrmathami.thegame.GameField;
 import mrmathami.thegame.entity.UpdatableEntity;
 import mrmathami.thegame.entity.enemy.AbstractEnemy;
 import mrmathami.thegame.entity.tile.AbstractTile;
+
+import java.util.Random;
 
 
 public abstract class AbstractSpawner<E extends AbstractEnemy> extends AbstractTile implements UpdatableEntity {
@@ -31,11 +34,32 @@ public abstract class AbstractSpawner<E extends AbstractEnemy> extends AbstractT
 			// Check if the spot is valid and then spawn an enemy
 			// Remember to set this.tickDown back to this.spawnInterval
 			// and decrease this.numOfSpawn once you spawn an enemy.
+
 			// this.tickDown = spawnInterval;
 			// this.numOfSpawn -= 1;
+
+//			Random random = new Random();
+//			int r= random.nextInt(2);
+//			double deltaX = random.nextDouble() * spawningSize;
+//			double deltaY = random.nextDouble() * spawningSize;
+
+			field.doSpawn(this.doSpawn(field.getTickCount(), this.getPosX()+ 1, this.getPosY()+(double) new Random().nextInt(2)));
+
+			this.tickDown = spawnInterval;
+			this.numOfSpawn -= 1;
 		}
 	}
+	public final void Hupdate(GameField field)
+	{
+		this.tickDown -= 1;
+		if (tickDown <= 0 && numOfSpawn > 0) {
+			field.doSpawn(this.doSpawn(field.getTickCount(), this.getPosX() , this.getPosY()+(double) new Random().nextInt(2)));
 
+			this.tickDown = spawnInterval;
+			this.numOfSpawn -= 1;
+		}
+
+	}
 	/**
 	 * Create a new enemy. Each spawner spawn different type of enemy.
 	 * Override this method and return the type of enemy that your spawner spawn.

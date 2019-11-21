@@ -5,6 +5,7 @@ import mrmathami.thegame.GameField;
 import mrmathami.thegame.entity.*;
 import mrmathami.thegame.entity.tile.Road;
 import mrmathami.thegame.Config;
+import mrmathami.thegame.entity.tile.Target;
 
 
 import java.util.Collection;
@@ -20,13 +21,17 @@ public abstract class AbstractEnemy extends AbstractEntity implements UpdatableE
 	private long armor;
 	private double speed;
 	private long reward;
+	private long damage;
 
-	protected AbstractEnemy(long createdTick, double posX, double posY, double size, long health, long armor, double speed, long reward) {
+	private int status;
+
+	protected AbstractEnemy(long createdTick, double posX, double posY, double size, long health, long armor, double speed, long reward, long damage) {
 		super(createdTick, posX, posY, size, size);
 		this.health = health;
 		this.armor = armor;
 		this.speed = speed;
 		this.reward = reward;
+		this.damage= damage;
 	}
 
 	private static double evaluateDistance( Collection<GameEntity> overlappableEntities,
@@ -46,28 +51,40 @@ public abstract class AbstractEnemy extends AbstractEntity implements UpdatableE
 		}
 		return distance / sumArea;
 	}
+
     public final void goPikachu(GameField field)
     {
 
-        int x= (int) getPosX();
-        System.out.println(getPosX()+" now x: "+x);
-        int y= (int) getPosY();
-        System.out.println(getPosY()+" now y: "+y);
-        int roadValue= field.getMapValAtXY(x,y);
-        System.out.println("road found: "+roadValue);
-        switch (roadValue)
+//        int x= (int) getPosX();
+//        System.out.println(getPosX());
+//        int y= (int) getPosY();
+//        System.out.println(getPosY());
+//        int roadValue= field.getMapValAtXY(x,y);
+//        System.out.println("road found: "+roadValue);
+        if (getPosX()%2==0 || (getPosX()+1)%2==0)
+			if (getPosY()%2==0 || (getPosY()+1)%2==0)
+			{
+				int x= (int) getPosX();
+//				System.out.println(getPosX()+" now x: "+x);
+				int y= (int) getPosY();
+//				System.out.println(getPosY()+" now y: "+y);
+				status= field.getMapValAtXY(x,y);
+			}
+
+        switch (status)
         {
             case 1:
-                setPosX(getPosX()-speed);
+                setPosX( (double) Math.round( (getPosX()-speed)*100 )/100 );
                 break;
             case 3:
-                setPosX(getPosX()+speed);
+                setPosX( (double)Math.round( (getPosX()+speed)*100 )/100 );
                 break;
             case 2:
-                setPosY(getPosY()-speed);
+                //Math.round( (getPosY()+speed)*10 )/10
+                setPosY( (double)Math.round( (getPosY()-speed)*100 )/100 );
                 break;
             case 4:
-                setPosY(getPosY()+speed);
+                setPosY((double)Math.round( (getPosY()+speed)*100 )/100);
                 break;
 
         }
@@ -103,12 +120,13 @@ public abstract class AbstractEnemy extends AbstractEntity implements UpdatableE
 	@Override
 	public final void onDestroy( GameField field) {
 		// TODO: reward
+		field.setReward(reward);
 	}
 
 	@Override
 	public final boolean onEffect( GameField field,  LivingEntity livingEntity) {
 		// TODO: harm the target
-
+        ((Target)livingEntity).doEffect(damage);
 		this.health = Long.MIN_VALUE;
 		return false;
 	}
@@ -120,7 +138,11 @@ public abstract class AbstractEnemy extends AbstractEntity implements UpdatableE
 
 	@Override
 	public final void doEffect(long value) {
-		if (health != Long.MIN_VALUE && (value < -armor || value > 0)) this.health += value;
+		if (health != Long.MIN_VALUE && (value < -armor || value > 0))
+		{
+			this.health += armor + value;
+//			System.out.println("health: "+health);
+		}
 	}
 
 	@Override

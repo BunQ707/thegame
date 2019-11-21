@@ -1,8 +1,14 @@
 package mrmathami.thegame;
 
 
+import javafx.event.EventHandler;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Rectangle;
 import mrmathami.thegame.entity.*;
 import mrmathami.thegame.entity.enemy.NormalEnemy;
+import mrmathami.thegame.entity.menu.BuildMenu;
+import mrmathami.thegame.entity.tile.tower.NormalTower;
 
 
 import java.util.*;
@@ -11,7 +17,8 @@ import java.util.*;
  * Game Field. Created from GameMap for each new stage. Represent the currently playing game.
  */
 public final class GameField {
-	 private final Set<GameEntity> entities = new LinkedHashSet<>(Config._TILE_MAP_COUNT);
+
+	private final Set<GameEntity> entities = new LinkedHashSet<>(Config._TILE_MAP_COUNT);
 	 private final Collection<GameEntity> unmodifiableEntities = Collections.unmodifiableCollection(entities);
 	 private final List<GameEntity> spawnEntities = new ArrayList<>(Config._TILE_MAP_COUNT);
 
@@ -28,6 +35,13 @@ public final class GameField {
 	 */
 	private long tickCount;
 	private int[][] mapLoaded;
+	private long reward;
+
+
+	static public Image NormalBullet;
+//	static public Image MachineGunBullet;
+
+
 
 	public GameField( GameStage gameStage) {
 		this.width = gameStage.getWidth();
@@ -35,7 +49,13 @@ public final class GameField {
 		this.tickCount = 0;
 		this.mapLoaded = gameStage.getMap();
 		entities.addAll(gameStage.getEntities());
+		reward = 100;
+		NormalBullet=new Image("NormalBullet.png");
+//		MachineGunBullet= new Image("MachineGunBullet.png");
 	}
+    public long getReward() { return reward;}
+
+    public void setReward(long reward) { this.reward+= reward;}
 
 	public final double getWidth() {
 		return width;
@@ -51,6 +71,7 @@ public final class GameField {
 
     public final int[][] getMap() {return mapLoaded; }
     public final int getMapValAtXY(int posX, int posY) {return mapLoaded[posX][posY]; }
+
 
 	/**
 	 * @return entities on the field. Read-only list.
@@ -85,7 +106,8 @@ public final class GameField {
 	public final void tick() {
 
 		this.tickCount += 1;
-        //doSpawn(new NormalEnemy(0,13,2));
+
+		//doSpawn(new NormalEnemy(0,13,2));
 		// 1.1. Update UpdatableEntity
 		for (final GameEntity entity : entities) {
 			if (entity instanceof UpdatableEntity) ((UpdatableEntity) entity).onUpdate(this);
@@ -127,5 +149,18 @@ public final class GameField {
 		spawnEntities.clear();
 
 	}
+//	public void buildRequest(MouseEvent mouseEvent, int a, int b)
+//	{
+//		Rectangle lft =new Rectangle(a-1,b,1,1);
+//		EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
+//			@Override
+//			public void handle(MouseEvent e) {
+//				doSpawn(new NormalTower(getTickCount(), a,b));
+//			}
+//		};
+//		lft.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+//	//	doSpawn(new NormalTower(getTickCount(), a,b));
+//	}
+
 
 }

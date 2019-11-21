@@ -1,10 +1,14 @@
 package mrmathami.thegame;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.FontSmoothingType;
 import javafx.stage.Stage;
 
@@ -33,11 +37,11 @@ public final class Main extends Application {
 		canvas.setOnKeyPressed(gameController::keyDownHandler);
 		canvas.setOnKeyReleased(gameController::keyUpHandler);
 //		canvas.setOnKeyTyped(...);
-
+//
 		canvas.setOnMousePressed(gameController::mouseDownHandler);
 		canvas.setOnMouseReleased(gameController::mouseUpHandler);
 //		canvas.setOnMouseClicked(...);
-//		canvas.setOnMouseMoved(...);
+		canvas.setOnMouseMoved(gameController::mouseMoveHandler);
 
 
 		primaryStage.setResizable(true);
@@ -45,9 +49,9 @@ public final class Main extends Application {
 		primaryStage.setOnCloseRequest(gameController::closeRequestHandler);
 		//tạo scene và đưa vào stage, show map
 		primaryStage.setScene(new Scene(new StackPane(canvas)));
+
 		primaryStage.show();
 
-		//Starts the AnimationTimers
 		gameController.start();
 	}
 }

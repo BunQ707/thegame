@@ -2,6 +2,8 @@ package mrmathami.thegame.entity.tile;
 
 import mrmathami.thegame.entity.LivingEntity;
 
+import static mrmathami.thegame.GameController.isContinue;
+
 public final class Target extends AbstractTile implements LivingEntity {
 	private long health;
 
@@ -27,6 +29,12 @@ public final class Target extends AbstractTile implements LivingEntity {
 
 	@Override
 	public boolean isDestroyed() {
-		return health <= 0L;
+	    if (health <= 0L)
+        {
+            //TODO: pause game, draw menu
+            isContinue=false;
+            return true;
+        }
+		else return false;
 	}
 }

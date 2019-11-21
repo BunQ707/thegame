@@ -5,9 +5,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
+import mrmathami.thegame.GameField;
 import mrmathami.thegame.drawer.EntityDrawer;
 import mrmathami.thegame.entity.GameEntity;
-
+import mrmathami.thegame.entity.bullet.SniperBullet;
 
 
 public final class SniperBulletDrawer implements EntityDrawer {
@@ -28,5 +29,6 @@ public final class SniperBulletDrawer implements EntityDrawer {
 	public void draw(long tickCount,  GraphicsContext graphicsContext,  GameEntity entity, double screenPosX, double screenPosY, double screenWidth, double screenHeight, double zoom) {
 		graphicsContext.setFill(gradient);
 		graphicsContext.fillOval(screenPosX, screenPosY, screenWidth, screenHeight);
+//		graphicsContext.drawImage(GameField.SniperBullet,screenPosX, screenPosY, screenWidth, screenHeight);
 	}
 }

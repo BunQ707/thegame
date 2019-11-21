@@ -2,6 +2,7 @@ package mrmathami.thegame.entity.tile.tower;
 
 import mrmathami.thegame.GameEntities;
 import mrmathami.thegame.GameField;
+import mrmathami.thegame.entity.GameEntity;
 import mrmathami.thegame.entity.UpdatableEntity;
 import mrmathami.thegame.entity.bullet.AbstractBullet;
 import mrmathami.thegame.entity.enemy.AbstractEnemy;
@@ -28,9 +29,20 @@ public abstract class AbstractTower<E extends AbstractBullet> extends AbstractTi
 		this.tickDown -= 1;
 		if (tickDown <= 0) {
 			// TODO: Find a target and spawn a bullet to that direction.
-			// Use GameEntities.getFilteredOverlappedEntities to find target in range
+			//Use GameEntities.getFilteredOverlappedEntities to find target in range
 			// Remember to set this.tickDown back to this.speed after shooting something.
 			// this.tickDown = speed;
+			for (AbstractEnemy tar: GameEntities.getFilteredOverlappedEntities(field.getEntities(), AbstractEnemy.class,
+					getPosX()+getWidth()/2-range,
+					getPosY()+getHeight()/2-range,
+					getWidth()+2*range,
+					getHeight()+2*range ) )
+			{
+				if (tar!=null)
+				field.doSpawn(this.doSpawn(field.getTickCount(), this.getPosX()+0.25 , this.getPosY()+0.25, -this.getPosX()+tar.getPosX() , -this.getPosY() + tar.getPosY()) );
+				break;
+			}
+			this.tickDown = speed;
 		}
 	}
 
